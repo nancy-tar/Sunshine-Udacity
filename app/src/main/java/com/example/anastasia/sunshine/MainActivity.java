@@ -4,11 +4,9 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Menu;
-import android.view.MenuItem;
 
 
-public class MainActivity extends AppCompatActivity implements MainActivityFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements ForecastFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +15,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
 
         if (savedInstanceState == null) {
 
-            Fragment newFragment = new MainActivityFragment();
+            Fragment newFragment = new ForecastFragment();
             getSupportFragmentManager().beginTransaction().add(R.id.container, newFragment).commit();
         }
 
