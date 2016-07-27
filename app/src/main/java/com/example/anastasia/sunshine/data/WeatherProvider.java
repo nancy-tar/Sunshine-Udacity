@@ -24,6 +24,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
+import com.example.anastasia.sunshine.data.WeatherContract;
+
 public class WeatherProvider extends ContentProvider {
 
     // The URI Matcher used by this content provider.
@@ -128,7 +130,6 @@ public class WeatherProvider extends ContentProvider {
         matcher.addURI(authority, WeatherContract.PATH_WEATHER, WEATHER);
         matcher.addURI(authority, WeatherContract.PATH_WEATHER + "/*", WEATHER_WITH_LOCATION);
         matcher.addURI(authority, WeatherContract.PATH_WEATHER + "/*/#", WEATHER_WITH_LOCATION_AND_DATE);
-
         matcher.addURI(authority, WeatherContract.PATH_LOCATION, LOCATION);
         return matcher;
     }
@@ -244,10 +245,10 @@ public class WeatherProvider extends ContentProvider {
                 long _id = db.insert(WeatherContract.LocationEntry.TABLE_NAME, null, values);
                 if ( _id > 0 )
                     returnUri = WeatherContract.LocationEntry.buildLocationUri(_id);
-                else
+                 else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
-                break;
-            }
+                    break;
+                }
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -257,7 +258,12 @@ public class WeatherProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
+
+        // Student: Start by getting a writable database
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
+        // Student: Use the uriMatcher to match the WEATHER and LOCATION URI's we are going to
+        // handle.  If it doesn't match these, throw an UnsupportedOperationException.
         final int match = sUriMatcher.match(uri);
         int rowsDeleted;
         // this makes delete all rows return the number of rows deleted
@@ -278,6 +284,7 @@ public class WeatherProvider extends ContentProvider {
         if (rowsDeleted != 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
+        // Student: return the actual rows deleted
         return rowsDeleted;
     }
 
@@ -292,7 +299,9 @@ public class WeatherProvider extends ContentProvider {
     @Override
     public int update(
             Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        //get
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        // what to do? match uri with known commands
         final int match = sUriMatcher.match(uri);
         int rowsUpdated;
 
