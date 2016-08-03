@@ -117,6 +117,7 @@ public class ForecastFragment extends Fragment  implements LoaderManager.LoaderC
         super.onCreate(savedInstanceState);
         //handle menu_main events
         setHasOptionsMenu(true);
+        updateWeather();
 
     }
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
