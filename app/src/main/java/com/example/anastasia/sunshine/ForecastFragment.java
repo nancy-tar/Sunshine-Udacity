@@ -20,6 +20,7 @@ import android.widget.ListView;
 
 
 import com.example.anastasia.sunshine.data.WeatherContract;
+import com.example.anastasia.sunshine.service.SunshineService;
 
 
 /**
@@ -241,10 +242,10 @@ public class ForecastFragment extends Fragment  implements LoaderManager.LoaderC
      * Helper function to update weather data from the server
      */
     private void updateWeather(){
-
-        FetchWeatherTask weatherTask = new FetchWeatherTask(getActivity());
-        String location = Utility.getPreferredLocation(getActivity());
-        weatherTask.execute(location);
+        Intent intent = new Intent(getActivity(), SunshineService.class);
+        intent.putExtra(SunshineService.LOCATION_QUERY_EXTRA,
+        Utility.getPreferredLocation(getActivity()));
+        getActivity().startService(intent);
     }
 
 
